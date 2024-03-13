@@ -1,7 +1,7 @@
 <?php
 	include 'inc/headers.inc.php';
     include 'inc/cookie.inc.php';
-    define('PATH_LOG', 'path.log');
+    const PATH_LOG = 'inc/log/path.log';
     include 'inc/log.inc.php';
 ?>
 <!DOCTYPE html>
