@@ -13,7 +13,7 @@ if(isset($_POST['name']) and isset($_POST['email']) and isset($_POST['msg'])){
     $email = $_POST['email'];
     $msg = $_POST['msg'];
 }
-$quiery = mysqli_query($link, "INSERT INTO msgs (name, email, msg) VALUES ('$name', '$email', '$msg')");
+$addQuery = mysqli_query($link, "INSERT INTO msgs (name, email, msg) VALUES ('$name', '$email', '$msg')");
 /* Сохранение записи в БД */
 
 /* Удаление записи из БД */
@@ -34,6 +34,15 @@ Email: <br /><input type="text" name="email" /><br />
 </form>
 <?php
 /* Вывод записей из БД */
+$getQuery = mysqli_fetch_all(mysqli_query($link, 'SELECT id, name, email, msg, UNIX_TIMESTAMP(datetime) as dt FROM msgs ORDER BY id DESC'));
+echo "<p>" .  "Всего записей в гостевой книге: " . count($getQuery) ."</p>";
+echo "<pre>";
+var_dump($getQuery);
+for($i = 0; $i < count($getQuery); $i++){
+    echo "
+        
+    ";
+}
 mysqli_close($link);
 /* Вывод записей из БД */
 ?>
