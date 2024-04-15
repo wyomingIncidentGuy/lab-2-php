@@ -17,7 +17,7 @@ $addQuery = mysqli_query($link, "INSERT INTO msgs (name, email, msg) VALUES ('$n
 /* Сохранение записи в БД */
 
 /* Удаление записи из БД */
-
+$deleteQuery = mysqli_query($link, 'DELETE FROM msgs WHERE id = $_GET["del"]');
 /* Удаление записи из БД */
 ?>
 <h3>Оставьте запись в нашей Гостевой книге</h3>
@@ -37,13 +37,13 @@ Email: <br /><input type="text" name="email" /><br />
 $getQuery = mysqli_fetch_all(mysqli_query($link, 'SELECT id, name, email, msg, UNIX_TIMESTAMP(datetime) as dt FROM msgs ORDER BY id DESC'));
 echo "<p>" .  "Всего записей в гостевой книге: " . count($getQuery) ."</p>";
 echo "<pre>";
-var_dump($getQuery);
 
 for($i = 0; $i < count($getQuery); $i++){
     echo "<p>";
-    echo "<a " . "href = 'mailto:" . $getQuery[$i][2] . "'" . ">"  . $getQuery[$i][1] . "</a>" . " написал в " . date("d-m-Y H:i:s", $getQuery[$i][4]) . "<br>";
+    echo "<a " . "href = 'mailto:" . $getQuery[$i][2] . "'" . ">"  . $getQuery[$i][1] . "</a>" . "<br>" . " написал в " . date("d-m-Y H:i:s", $getQuery[$i][4]) . "<br>". $getQuery[$i][3] . "<br>";
     echo "</p>";
     echo "<p align = 'right'>";
+    echo "<a href = '../files/index.php?id=gbook&del={$i}'>link</a>";
     echo "</p>";
 }
 mysqli_close($link);
