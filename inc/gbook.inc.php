@@ -12,12 +12,18 @@ if(isset($_POST['name']) and isset($_POST['email']) and isset($_POST['msg'])){
     $name = $_POST['name'];
     $email = $_POST['email'];
     $msg = $_POST['msg'];
+    $addQuery = mysqli_query($link, "INSERT INTO msgs (name, email, msg) VALUES ('$name', '$email', '$msg')");
+    unset($_POST['name']);
+    unset($_POST['email']);
+    unset($_POST['msg']);
 }
-$addQuery = mysqli_query($link, "INSERT INTO msgs (name, email, msg) VALUES ('$name', '$email', '$msg')");
+
 /* Сохранение записи в БД */
 
 /* Удаление записи из БД */
-$deleteQuery = mysqli_query($link, 'DELETE FROM msgs WHERE id = $_GET["del"]');
+if(isset($_GET["del"])){
+    $deleteQuery = mysqli_query($link, "DELETE FROM msgs WHERE id = {$_GET['del']}");
+}
 /* Удаление записи из БД */
 ?>
 <h3>Оставьте запись в нашей Гостевой книге</h3>
@@ -39,11 +45,12 @@ echo "<p>" .  "Всего записей в гостевой книге: " . cou
 echo "<pre>";
 
 for($i = 0; $i < count($getQuery); $i++){
+    $inc = ++$i;
     echo "<p>";
     echo "<a " . "href = 'mailto:" . $getQuery[$i][2] . "'" . ">"  . $getQuery[$i][1] . "</a>" . "<br>" . " написал в " . date("d-m-Y H:i:s", $getQuery[$i][4]) . "<br>". $getQuery[$i][3] . "<br>";
     echo "</p>";
     echo "<p align = 'right'>";
-    echo "<a href = '../files/index.php?id=gbook&del={$i}'>link</a>";
+    echo "<a href = '../lab2-php/index.php?id=gbook&del={$inc}'>link</a>";
     echo "</p>";
 }
 mysqli_close($link);
