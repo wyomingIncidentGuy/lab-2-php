@@ -13,9 +13,6 @@ if(isset($_POST['name']) and isset($_POST['email']) and isset($_POST['msg'])){
     $email = $_POST['email'];
     $msg = $_POST['msg'];
     $addQuery = mysqli_query($link, "INSERT INTO msgs (name, email, msg) VALUES ('$name', '$email', '$msg')");
-    unset($_POST['name']);
-    unset($_POST['email']);
-    unset($_POST['msg']);
 }
 
 /* Сохранение записи в БД */
