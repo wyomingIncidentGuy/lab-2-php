@@ -40,14 +40,13 @@ Email: <br /><input type="text" name="email" /><br />
 $getQuery = mysqli_fetch_all(mysqli_query($link, 'SELECT id, name, email, msg, UNIX_TIMESTAMP(datetime) as dt FROM msgs ORDER BY id DESC'));
 echo "<p>" .  "Всего записей в гостевой книге: " . count($getQuery) ."</p>";
 echo "<pre>";
-
 for($i = 0; $i < count($getQuery); $i++){
-    $inc = ++$i;
+    $commentId = (int) $getQuery[$i][0];
     echo "<p>";
     echo "<a " . "href = 'mailto:" . $getQuery[$i][2] . "'" . ">"  . $getQuery[$i][1] . "</a>" . "<br>" . " написал в " . date("d-m-Y H:i:s", $getQuery[$i][4]) . "<br>". $getQuery[$i][3] . "<br>";
     echo "</p>";
     echo "<p align = 'right'>";
-    echo "<a href = '../lab-2-php/index.php?id=gbook&del={$inc}'>link</a>";
+    echo "<a href = '../lab-2-php/index.php?id=gbook&del={$commentId}'>link</a>";
     echo "</p>";
 }
 mysqli_close($link);
