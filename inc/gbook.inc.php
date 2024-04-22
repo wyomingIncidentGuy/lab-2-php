@@ -46,7 +46,7 @@ for($i = 0; $i < count($getQuery); $i++){
     echo "<a " . "href = 'mailto:" . $getQuery[$i][2] . "'" . ">"  . $getQuery[$i][1] . "</a>" . "<br>" . " написал в " . date("d-m-Y H:i:s", $getQuery[$i][4]) . "<br>". $getQuery[$i][3] . "<br>";
     echo "</p>";
     echo "<p align = 'right'>";
-    echo "<a href = '../lab-2-php/index.php?id=gbook&del={$commentId}'>link</a>";
+    echo "<a href = '../lab-2-php/index.php?id=gbook&del={$commentId}'>delete</a>";
     echo "</p>";
 }
 mysqli_close($link);
