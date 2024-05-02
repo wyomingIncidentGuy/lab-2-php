@@ -9,4 +9,6 @@
     $count = 0;
     $link = mysqli_connect(DB_HOST, DB_LOGIN, DB_PASSWORD, DB_NAME);
 
-    mysqli_close($link);
+    if(function_exists('basketInit')){
+        basketInit();
+    }

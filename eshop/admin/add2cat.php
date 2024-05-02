@@ -1,5 +1,5 @@
-<?
-require "secure/session.inc.php";
+<?php
+    require "secure/session.inc.php";
 ?>
 <!DOCTYPE html>
 <html>
