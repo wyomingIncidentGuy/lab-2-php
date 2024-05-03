@@ -1,6 +1,11 @@
 <?php
 	require "inc/lib.inc.php";
 	require "inc/config.inc.php";
+
+    $orderDate = date('d-m-Y H:i:s');
+    $order = implode('|', $_POST);
+    $order .= '|' . $basket['orderid'] . '|' . $orderDate;
+    addOrderToLog($order);
 ?>
 <!DOCTYPE html>
 <html>

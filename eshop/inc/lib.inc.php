@@ -75,3 +75,9 @@
         $basket = base64_encode(serialize($basket));
         setcookie('basket', $basket, 0x7FFFFFFF);
     }
+
+    function addOrderToLog($order){
+        $f = fopen('W:/domains/localhost/lab-2-php/eshop/admin/orders.log', 'a+') or die('cannot open file orders.log');
+        fputs($f, $order . "\r\n");
+        fclose($f);
+    }

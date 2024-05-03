@@ -60,12 +60,12 @@
 </table>
 
 <p>Всего товаров в корзине на сумму: <?=$sum?>руб.</p>
-<?php
-    }
-?>
+
 <div align="center">
 	<input type="button" value="Оформить заказ!" onClick="location.href='orderform.php'" />
 </div>
-
+<?php
+    }
+?>
 </body>
 </html>
