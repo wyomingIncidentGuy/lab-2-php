@@ -77,7 +77,74 @@
     }
 
     function addOrderToLog($order){
-        $f = fopen('W:/domains/localhost/lab-2-php/eshop/admin/orders.log', 'a+') or die('cannot open file orders.log');
+        $f = fopen(ORDERS_LOG, 'a+') or die('cannot open file orders.log');
         fputs($f, $order . "\r\n");
         fclose($f);
+    }
+
+    function saveOrder($datetime){
+        global $link, $basket;
+        $goods = myBasket();
+        $stmt = mysqli_stmt_init($link);
+        $sql = 'INSERT INTO orders (
+                                title, 
+                                author, 
+                                pubyear, 
+                                price, 
+                                quantity, 
+                                orderid, 
+                                datetime) 
+ VALUES (?, ?, ?, ?, ?, ?, ?)';
+        if (!mysqli_stmt_prepare($stmt, $sql))
+            return false;
+        foreach($goods as $item){
+            mysqli_stmt_bind_param($stmt, "ssiiisi",
+                $item['title'], $item['author'],
+                $item['pubyear'], $item['price'],
+                $item['quantity'],
+                $basket['orderid'],
+                $datetime);
+            mysqli_stmt_execute($stmt);
+        }
+        mysqli_stmt_close($stmt);
+        $basket = base64_encode(serialize($basket));
+        setcookie('basket', $basket, time());
+        return true;
+    }
+
+    function getOrders(){
+        global $link;
+        if(!is_file(ORDERS_LOG))
+            return false;
+
+        $orders = file(ORDERS_LOG);
+
+        $allorders = [];
+        foreach ($orders as $order) {
+            list($name, $email, $phone, $address, $orderid, $date) = explode("|",
+                $order);
+
+            $orderinfo = [];
+
+            $orderinfo["name"] = $name;
+            $orderinfo["email"] = $email;
+            $orderinfo["phone"] = $phone;
+            $orderinfo["address"] = $address;
+            $orderinfo["orderid"] = $orderid;
+            $orderinfo["date"] = $date;
+
+            $sql = "SELECT title, author, pubyear, price, quantity 
+                    FROM orders 
+                    WHERE orderid = '$orderid'";
+
+            if(!$result = mysqli_query($link, $sql))
+                return false;
+
+            $items = mysqli_fetch_all($result, MYSQLI_ASSOC);
+            mysqli_free_result($result);
+            $orderinfo["goods"] = $items;
+            $allorders[] = $orderinfo;
+        }
+        return $allorders;
+
     }
