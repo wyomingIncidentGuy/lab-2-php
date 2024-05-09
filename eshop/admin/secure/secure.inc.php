@@ -1,13 +1,17 @@
 <?php
     const FILE_NAME = '.htpasswd';
 
-    function getHAsh($password){
+    function getHash($password){
         $hash = password_hash($password, PASSWORD_BCRYPT);
         return $hash;
     }
 
+    function checkHash($password, $hash){
+        return password_verify($password, $hash);
+    }
+
     function saveUser($login, $hash){
-        $str = "$login:$hash\n";
+        $str = "$login:$hash\r\n";
         if(file_put_contents(FILE_NAME, $str, FILE_APPEND)){
             return true;
         }
@@ -26,3 +30,11 @@
         }
         return false;
     }
+
+
+
+function logOut(){
+    session_destroy();
+    header('Location: secure/login.php');
+    exit;
+}

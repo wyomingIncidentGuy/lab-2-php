@@ -1,4 +1,4 @@
-<?
+<?php
 require_once "session.inc.php";
 require_once "secure.inc.php";
 ?>
@@ -11,7 +11,7 @@ require_once "secure.inc.php";
 
 <body>
 <h1>Создание пользователя</h1>
-<?
+<?php
 $login = 'root';
 $password = '1234';
 $result = '';
